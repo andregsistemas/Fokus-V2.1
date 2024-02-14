@@ -7,6 +7,7 @@ const ulTarefas = document.querySelector('.app__section-task-list')
 const paragrafoDescricaoTarefa = document.querySelector('.app__section-active-task-description')
 
 const tarefas = JSON.parse(localStorage.getItem('tarefas')) || []
+let tarefaSelecionada = null
 
 const btnCancelar = document.querySelector('.app__form-footer__button--cancel');
 const btnDeletar = document.querySelector('.app__form-footer__button--delete');
@@ -71,6 +72,18 @@ function criarElementoTarefa(tarefa) {
     li.append(botao)
 
     li.onclick = () => {
+
+        document.querySelectorAll('.app__section-task-list-item-active').forEach(e => {
+            e.classList.remove('app__section-task-list-item-active')
+        })
+
+        if (tarefaSelecionada == tarefa) {
+            paragrafoDescricaoTarefa.textContent = ''
+            tarefaSelecionada = null
+            return
+        }
+        
+        tarefaSelecionada = tarefa
         paragrafoDescricaoTarefa.textContent = tarefa.descricao
         li.classList.add('app__section-task-list-item-active')
     }
